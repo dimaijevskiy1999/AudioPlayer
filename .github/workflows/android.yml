@@ -20,10 +20,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Grant execute permission for gradlew
-      run: |
-        cd AudioPlayer
-        chmod +x gradlew || true
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: '8.9'
 
     - name: Build with Gradle
       run: |
@@ -31,6 +31,7 @@ jobs:
         if [ ! -f gradlew ]; then
           gradle wrapper --gradle-version 8.9
         fi
+        chmod +x gradlew
         ./gradlew assembleDebug
 
     - name: Upload APK
